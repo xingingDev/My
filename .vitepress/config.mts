@@ -1,31 +1,17 @@
+// docs/.vitepress/config.mts
 import { defineConfig } from 'vitepress'
 
-// https://vitepress.dev/reference/site-config
 export default defineConfig({
-  title: "StarOrange的小网站",
-  description: "使用Vitepress强力驱动",
+  title: 'StarOrange小站',
+  description: '使用VitePress强力驱动',
+  base: '/My/',
   themeConfig: {
-    // https://vitepress.dev/reference/default-theme-config
     nav: [
       { text: '首页', link: '/' },
       { text: '指南', link: '/guide' }
     ],
-
     sidebar: [
-      {
-        text: '导航栏',
-        items: [
-          { text: '首页', link: '/' },
-          { text: '指南', link: '/guide' }
-        ]
-      }
-    ],
-
-    socialLinks: [
-      
+      { text: '快速开始', link: '/guide' }
     ]
   }
 })
-export default {
-  base: '/My/'
-}
