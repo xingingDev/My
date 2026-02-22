@@ -1,4 +1,4 @@
-name: 部署VitePress站点到Pages
+name: Deploy VitePress site to Pages
 
 on:
   push:
@@ -18,77 +18,32 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: 检出代码
+      - name: Checkout
         uses: actions/checkout@v4
-
-      - name: 设置Node环境
+      
+      - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: 18
           cache: npm
-
-      - name: 安装依赖
-        run: npm ci
-
-      - name: 构建VitePress站点
-        run: npm run docs:build
-
-      - name: 查找构建输出
-        id: find-dist
-        run: |
-          # 尝试多个可能的路径
-          if [ -d "docs/.vitepress/dist" ]; then
-            echo "path=docs/.vitepress/dist" >> $GITHUB_OUTPUT
-            echo "✅ 找到 docs/.vitepress/dist"
-          elif [ -d ".vitepress/dist" ]; then
-            echo "path=.vitepress/dist" >> $GITHUB_OUTPUT
-            echo "✅ 找到 .vitepress/dist"
-          else
-            echo "❌ 找不到构建输出目录"
-            find . -name "dist" -type d
-            exit 1
-          fi
-
-      - name: 上传构建产物
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: ${{ steps.find-dist.outputs.path }}
-
-  deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - name: 部署到GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4      #     version: 9
-      # - uses: oven-sh/setup-bun@v1 # 如果使用 Bun，请取消注释
-      - name: Setup Node
-        uses: actions/setup-node@v6
-        with:
-          node-version: 24
-          cache: npm # 或 pnpm / yarn
-      - name: Setup Pages
-        uses: actions/configure-pages@v4
+      
       - name: Install dependencies
-        run: npm ci # 或 pnpm install / yarn install / bun install
-      - name: Build with VitePress
-        run: npm run docs:build # 或 pnpm docs:build / yarn docs:build / bun run docs:build
+        run: npm ci
+      
+      - name: Build VitePress site
+        run: npm run docs:build
+      
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
           path: docs/.vitepress/dist
 
-  # 部署工作
   deploy:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     needs: build
     runs-on: ubuntu-latest
-    name: Deploy
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
