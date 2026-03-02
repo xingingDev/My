@@ -11,11 +11,13 @@ export default defineConfig({
   themeConfig: {
     nav: [
       { text: '首页', link: '/' },
-      { text: '指南', link: '/guide' }
+      { text: '指南', link: '/guide' },
+      { text: '关于lic', link:  '/About-lic' }
     ],
     sidebar: [
       { text: '首页', link: '/' },
-      { text: '指南', link: '/guide' }
+      { text: '指南', link: '/guide' },
+      { text: '关于lic', link:  '/About-lic' }
     ]
   }
 })
