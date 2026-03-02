@@ -16,8 +16,7 @@ export default defineConfig({
     ],
     sidebar: [
       { text: '首页', link: '/' },
-      { text: '指南', link: '/guide' },
-      { text: '关于lic', link:  '/About-lic' }
+      { text: '指南', link: '/guide' }
     ]
   }
 })
